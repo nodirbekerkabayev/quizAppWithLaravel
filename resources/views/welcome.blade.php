@@ -18,13 +18,13 @@
                 </p>
                 <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
                     <div class="rounded-md shadow">
-                        <a href="add-quiz.php"
+                        <a href="/login"
                            class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:px-10">
                             Create Your First Quiz
                         </a>
                     </div>
                     <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
-                        <a href="#how-it-works"
+                        <a href="/about"
                            class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:px-10">
                             Learn More
                         </a>
@@ -138,7 +138,7 @@
             </div>
 
             <div class="mt-10 text-center">
-                <a href="add-quiz.php"
+                <a href="/login"
                    class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                     Start Creating Now
                 </a>

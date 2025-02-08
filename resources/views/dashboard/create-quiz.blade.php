@@ -92,10 +92,10 @@
 
                         <!-- Submit Button -->
                         <div class="flex justify-end">
-                            <button type="submit"
+                            <a href="/dashboard/quizzes" type="submit"
                                     class="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 Create Quiz
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
