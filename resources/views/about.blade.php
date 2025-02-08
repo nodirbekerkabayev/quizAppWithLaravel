@@ -1,5 +1,7 @@
-<x-header></x-header>
+<x-main.header></x-main.header>
 <body class="bg-gray-50">
+
+<x-main.navbar></x-main.navbar>
 
 <!-- Hero Section -->
 <div class="bg-indigo-600 text-white py-20">
