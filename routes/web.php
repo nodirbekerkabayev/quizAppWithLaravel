@@ -11,11 +11,10 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/take-quiz', [QuizController::class, 'takeQuiz'])->middleware('auth')->name('take-quiz');
 
-Route::get('/dashboard', [DashboardController::class, 'home'])->middleware('auth')->name('home');
+Route::get('/dashboard', [DashboardController::class, 'home'])->middleware('auth')->name('dashboard');
 Route::get('/dashboard/quizzes', [DashboardController::class, 'quizzes'])->middleware('auth')->name('quizzes');
 Route::get('dashboard/create-quiz', [DashboardController::class, 'createQuiz'])->middleware('auth')->name('create-quiz');
 Route::get('dashboard/statistics', [DashboardController::class, 'statistics'])->middleware('auth')->name('statistics');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

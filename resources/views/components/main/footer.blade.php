@@ -9,10 +9,10 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="/" class="text-gray-400 hover:text-white">Dashboard</a></li>
-                        <li><a href="/about" class="text-gray-400 hover:text-white">About</a></li>
-                        <li><a href="/login" class="text-gray-400 hover:text-white">Login</a></li>
-                        <li><a href="/register" class="text-gray-400 hover:text-white">Register</a></li>
+                        <li><a href="{{ route('/') }}" class="text-gray-400 hover:text-white">Dashboard</a></li>
+                        <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-white">About</a></li>
+                        <li><a href="{{ route('login') }}" class="text-gray-400 hover:text-white">Login</a></li>
+                        <li><a href="{{ route('register') }}" class="text-gray-400 hover:text-white">Register</a></li>
                     </ul>
                 </div>
                 <div>

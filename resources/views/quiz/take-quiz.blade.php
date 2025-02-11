@@ -12,8 +12,8 @@
                 </div>
             </div>
             <div class="flex items-center space-x-3">
-                <a href="dashboard.html" class="py-2 px-4 text-gray-500 hover:text-gray-700">Dashboard</a>
-                <a href="profile.html" class="py-2 px-4 text-gray-500 hover:text-gray-700">Profile</a>
+                <a href="{{ route('dashboard') }}" class="py-2 px-4 text-gray-500 hover:text-gray-700">Dashboard</a>
+                <a href="{{ route('quizzes') }}" class="py-2 px-4 text-gray-500 hover:text-gray-700">Profile</a>
             </div>
         </div>
     </div>
