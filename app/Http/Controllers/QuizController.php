@@ -44,8 +44,7 @@ class QuizController extends Controller
             $quiz->questions()->create([
                 'question_text' => $question['question_text'],
                 'correct_answer' => $question['correct_answer']
-                
-            ])
+            ]);
         }
 
     }
