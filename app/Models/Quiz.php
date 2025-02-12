@@ -13,4 +13,9 @@ class Quiz extends Model
         'description',
         'time_limit'
     ];
+
+    public function questions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Question::class);
+    }
 }

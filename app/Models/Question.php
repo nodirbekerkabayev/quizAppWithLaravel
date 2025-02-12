@@ -11,4 +11,9 @@ class Question extends Model
         'question_text',
         'correct_answer'
     ];
+
+    public function options()
+    {
+        return $this->hasMany(Option::class);
+    }
 }

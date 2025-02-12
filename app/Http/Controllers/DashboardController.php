@@ -16,11 +16,6 @@ class DashboardController extends Controller
         return view('dashboard.quizzes');
     }
 
-    public function createQuiz(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
-    {
-        return view('dashboard.create-quiz');
-    }
-
     public function statistics(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         return view('dashboard.statistics');
