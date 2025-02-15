@@ -12,8 +12,8 @@
                 </div>
             </div>
             <div class="flex items-center space-x-3">
-                <a href="{{ route('dashboard') }}" class="py-2 px-4 text-gray-500 hover:text-gray-700">Dashboard</a>
-                <a href="{{ route('quizzes') }}" class="py-2 px-4 text-gray-500 hover:text-gray-700">Profile</a>
+                <a href="dashboard.html" class="py-2 px-4 text-gray-500 hover:text-gray-700">Dashboard</a>
+                <a href="profile.html" class="py-2 px-4 text-gray-500 hover:text-gray-700">Profile</a>
             </div>
         </div>
     </div>
@@ -21,15 +21,38 @@
 
 <!-- Main Content -->
 <main class="flex-grow container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6" id="questionContainer">
+    <div id="start-card" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+        <div class="text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4" id="title">Quiz Title</h2>
+            <p class="text-xl text-gray-700 mb-6" id="description">Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit.
+                Accusamus delectus dolorum eligendi esse excepturi in quam qui veritatis voluptatibus?
+                Dolore.</p>
+
+            <div class="flex justify-center space-x-12 mb-8">
+                <div class="text-center">
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-blue-600" id="time-taken">5:00</p>
+                    <p class="text-gray-600">Time Limit</p>
+                </div>
+            </div>
+
+            <button id="start-btn"
+                    class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Start Quiz
+            </button>
+        </div>
+    </div>
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 hidden" id="questionContainer">
         <!-- Quiz Header -->
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">JavaScript Fundamentals Quiz</h1>
-                <p class="text-gray-600 mt-2">Test your knowledge of JavaScript basics</p>
+                <h1 class="text-2xl font-bold text-gray-800">{{ $quiz->title }}</h1>
+                <p class="text-gray-600 mt-2">{{ $quiz->description }}</p>
             </div>
             <div class="text-right">
-                <div class="text-xl font-bold text-blue-600" id="timer">20:00</div>
+                <div class="text-xl font-bold text-blue-600" id="timer">{{ $quiz->time_limit}}</div>
                 <div class="text-sm text-gray-500">Time Remaining</div>
             </div>
         </div>
@@ -53,24 +76,12 @@
 
             <!-- Options -->
             <div class="space-y-3" id="options">
-                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="radio" name="answer" class="h-4 w-4 text-blue-600" value="a">
-                    <span class="ml-3">undefined</span>
-                </label>
-                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="radio" name="answer" class="h-4 w-4 text-blue-600" value="b">
-                    <span class="ml-3">object</span>
-                </label>
-                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="radio" name="answer" class="h-4 w-4 text-blue-600" value="c">
-                    <span class="ml-3">string</span>
-                </label>
-                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="radio" name="answer" class="h-4 w-4 text-blue-600" value="d">
-                    <span class="ml-3">null</span>
-                </label>
+
+
+
             </div>
         </div>
+
 
         <!-- Navigation Buttons -->
         <div class="flex justify-between items-center">
@@ -81,6 +92,7 @@
                 Next
             </button>
         </div>
+
 
         <!-- Submit Button -->
         <div class="mt-8 text-center">
@@ -107,10 +119,136 @@
                 </div>
             </div>
 
-            <a href="dashboard.html" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <a href="{{ route('dashboard') }}" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 Return to Dashboard
             </a>
         </div>
     </div>
 </main>
+
+<!-- Footer -->
+<footer class="bg-white shadow-lg mt-8">
+    <div class="max-w-6xl mx-auto px-4 py-4">
+        <div class="text-center text-gray-500 text-sm">
+            © 2024 Quiz Platform. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- Quiz JavaScript -->
+<script>
+    let startBtn = document.getElementById('start-btn');
+    startBtn.onclick = () => {
+        document.getElementById('start-card').classList.add('hidden');
+        document.getElementById('questionContainer').classList.remove('hidden');
+        let currentQuestion = getQuestion(currentQuestionIndex)
+        displayQuestion(currentQuestion)
+    }
+    // Timer functionality
+    function startTimer(duration, display) {
+        let timer = duration;
+        setInterval(() => {
+            const minutes = Math.floor(timer / 60);
+            const seconds = timer % 60;
+            display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (--timer < 0) {
+                timer = 0;
+                // Handle timer completion
+            }
+        }, 1000);
+    }
+
+    // Initialize quiz
+    let options = document.getElementById('options'),
+        questions = JSON.parse('<?php echo $quiz->toJson() ?>').questions,
+        currentQuestionIndex = 0;
+
+    function getQuestion(index=0) {
+        return questions[index];
+    }
+
+    function  displayQuestion(question){
+        let questionElement = document.getElementById('question'),
+            optionsElement = document.getElementById('options');
+        questionElement.innerText = question.name;
+        optionsElement.innerHTML = '';
+        question.options.forEach((option)=>{
+            optionsElement.innerHTML += `<label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                <input type="radio" name="answer" class="h-4 w-4 text-blue-600" value="a">
+                <span class="ml-3">${option.name}</span>
+        </label>`;
+        })
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const timerDisplay = document.getElementById('timer');
+        startTimer(1200, timerDisplay); // 20 minutes
+
+
+        // Add event listeners for navigation buttons
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentQuestionIndex++;
+            let question = getQuestion(currentQuestionIndex);
+            if (question) {
+                let questionElement = document.getElementById('question');
+                questionElement.textContent = question.question;
+                options.innerHTML = '';
+                question.options.forEach((option) => {
+                    options.innerHTML += `
+                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input type="radio" name="answer" class="h-4 w-4 text-blue-600" value="${option.id}">
+                    <span class="ml-3">${option.option_text}</span>
+                </label>`
+                });
+            } else {
+                alert('Quiz completed');
+            }
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            currentQuestionIndex--;
+            let question = getQuestion(currentQuestionIndex);
+            if (question) {
+                let questionElement = document.getElementById('question');
+                questionElement.textContent = question.question;
+                options.innerHTML = '';
+                question.options.forEach((option) => {
+                    options.innerHTML += `
+                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input type="radio" name="answer" class="h-4 w-4 text-blue-600" value="${option.id}">
+                    <span class="ml-3">${option.option_text}</span>
+                </label>`
+                });
+            } else {
+                alert('You are at the first question');
+            }
+        });
+
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            if (currentQuestionIndex >= 2) {
+                currentQuestionIndex--;
+            }
+            console.log(currentQuestionIndex);
+            console.log(questions[currentQuestionIndex]);
+            questions.splice(currentQuestionIndex, 1);
+            let question = takeQuiz(currentQuestionIndex),
+                questionElement = document.getElementById('question'),
+                questionContainer = document.getElementById('questionContainer');
+            if (question) {
+                questionElement.textContent = question.question;
+                options.innerHTML = '';
+                question.options.forEach((option) => {
+                    options.innerHTML += `
+                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input type="radio" name="answer" class="h-4 w-4 text-blue-600" value="${option.id}">
+                    <span class="ml-3">${option.option_text}</span>
+                </label>`
+                });
+            } else {
+                questionContainer.innerHTML = '';
+                document.getElementById('results-card').classList.remove('hidden');
+            }
+        });
+    });
+</script>
 <x-main.footer></x-main.footer>
