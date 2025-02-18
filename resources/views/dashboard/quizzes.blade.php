@@ -3,9 +3,8 @@
 <div class="flex min-h-screen">
     <!-- Sidebar -->
     <x-dashboard.sidebar></x-dashboard.sidebar>
-
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 flex flex-col">
         <!-- Top Navigation -->
         <x-dashboard.navbar></x-dashboard.navbar>
 
@@ -15,8 +14,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">My Quizzes</h2>
                 <div class="flex space-x-4">
-                    <a href="{{ route('create-quiz') }}"
-                       class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                    <a href="{{ route('create-quiz') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
                         Create New Quiz
                     </a>
                     <div class="flex border rounded-lg">
@@ -27,8 +25,7 @@
                         </button>
                         <button class="px-3 py-2 bg-gray-100">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M5 5h2v2H5V5zm0 4h2v2H5V9zm0 4h2v2H5v-2zm4-8h6v2H9V5zm0 4h6v2H9V9zm0 4h6v2H9v-2z"></path>
+                                <path d="M5 5h2v2H5V5zm0 4h2v2H5V9zm0 4h2v2H5v-2zm4-8h6v2H9V5zm0 4h6v2H9V9zm0 4h6v2H9v-2z"></path>
                             </svg>
                         </button>
                     </div>
@@ -63,15 +60,14 @@
                             <div class="dropdown">
                                 <button class="p-2 hover:bg-gray-100 rounded-full">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
                                     </svg>
                                 </button>
                             </div>
                         </div>
                         <p class="text-gray-600 mb-4">{{ $quiz->description }}</p>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm text-gray-500">{{ $quiz->question_count }} Questions</span>
+                            <span class="text-sm text-gray-500">{{ $quiz->questions_count }} Questions</span>
                             <span class="text-sm text-gray-500">{{ $quiz->time_limit }} minutes</span>
                         </div>
                         <div class="mb-4">
@@ -81,36 +77,29 @@
                             <span class="text-sm text-gray-500">75% Completion Rate</span>
                         </div>
                         <div class="flex justify-between">
-                            <a href="{{ route('edit-quiz', ['quiz' => $quiz->id]) }}" class="text-indigo-600 hover:text-indigo-800">Edit</a>
-                            <button class="text-green-600 hover:text-green-800">View Results</button>
-                            <button class="text-green-600 hover:text-green-100 rounded p-1 hover:bg-blue-500"
-                                    onclick="share('{{ $quiz->slug }}')">Share
-                            </button>
-                            <form action="{{ route('delete-quiz', ['quiz'=>$quiz->id]) }}" method="GET" onsubmit="return confirm('Are you sure?');">
-                                @csrf
-                                <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
-                            </form>
-
+                            <a href="{{ route('edit-quiz', ['quiz'=>$quiz->id]) }}" class="text-indigo-600 hover:text-indigo-800">Edit</a>
+                            <button
+                                class="text-green-600 hover:text-green-100 rounded p-1 hover:bg-blue-500"
+                                onclick="share('{{ $quiz->slug }}')"
+                            >Share</button>
+                            <a href="{{ route('delete-quiz', ['quiz'=>$quiz->id]) }}" class="text-red-600 hover:text-red-800">Delete</a>
                         </div>
                     </div>
-
                 @endforeach
-
-                <!-- Similar structure to Quiz Card 1 -->
+            </div>
+            <div class="my-3 flex items-center flex-col">
+                {{ $quizzes->links() }}
             </div>
         </main>
-            <div class="mt-4 flex justify-center">
-                {{ $quizzes->links('pagination::tailwind') }}
-            </div>
     </div>
     <script>
         async function share(slug) {
             try {
-                slug = '{{ url('/take-quiz') }}/' + slug;
+                slug = '{{ url('/show-quiz/') }}/' + slug;
                 await navigator.clipboard.writeText(slug);
-                alert("Contend copied to clipboard");
+                alert('Content copied to clipboard');
             } catch (err) {
-                console.error("Failed to copy: ", err);
+                console.error('Failed to copy: ', err);
             }
         }
     </script>
